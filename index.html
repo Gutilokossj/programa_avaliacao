@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+
+	<meta charset="UTF-8">
+	<title>Calculo Percentual</title>
+	<link rel="stylesheet" href="./style.css" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+ <body>
+	<h1 id="titulo" > CALCULAR AVALIAÇÃO DIÁRIA </h1>
+	<img  id ="softenSiem" src=".\IMAGENS\SIEM Colorido.png"/>
+	<img  id="gerencieAqui" src=".\IMAGENS\G.A.png"/>
+    <br>
+	<h2 id="quant"> Quantidade atendimento </h2>
+	<input type="number" id="quantidade" step="1" min="0" placeholder="Digite a quantidade" pattern="[0-9]+$" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"">
+	 <p id="mensagemErroQuantidade" style="color: red;"></p>
+	<h2> Quantidade avaliação </h2>
+	<h2 id="nota5"> &#128515 </h2>
+	<input type="number" id="avaliacao5" step="1" style="width:150px;" min="0" placeholder="Digite a quantidade" pattern="[0-9]+$" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"">
+	<p id="mensagemErroAvaliacao5" style="color: red;"></p>
+	<h2 id="nota4"> &#128578 </h2>
+	<input type="number" id="avaliacao4" step="1" style="width:150px;" min="0" placeholder="Digite a quantidade" pattern="[0-9]+$" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"">
+    <p id="mensagemErroAvaliacao4" style="color: red;"></p>
+    <h2 id="nota3"> &#128528 </h2>
+    <input type="number" id="avaliacao3" step="1" style="width:150px;" min="0" placeholder="Digite a quantidade" pattern="[0-9]+$" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"">
+    <p id="mensagemErroAvaliacao3" style="color: red;"></p>
+    <h2 id="nota2"> &#128577 </h2>
+    <input type="number" id="avaliacao2" step="1" style="width:150px;" min="0" placeholder="Digite a quantidade" pattern="[0-9]+$" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"">
+    <p id="mensagemErroAvaliacao2" style="color: red;"></p>
+    <h2 id="nota1"> &#128544 </h2>
+    <input type="number" id="avaliacao1" step="1" style="width:150px;" min="0" placeholder="Digite a quantidade" pattern="[0-9]+$" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"">
+    <p id="mensagemErroAvaliacao1" style="color: red;"></p>
+	<br><br>
+	<button id="calculaPercentualAvaliacao"><strong>CALCULAR PERCENTUAL</strong></button>
+	<button id="calculaMediaAvaliacao"><strong>CALCULAR MÉDIA</strong></button>
+
+</body>
+
+<script>
+
+//DICAS
+//Tira os parenteses do qAtendimento 
+//e do qAvaliacao, e quando você utilizar um querySelector, você tem que especificar 
+//o que você quer pegar, se for uma classe adicione " . ", se for um id adicione " # " e etc
+
+		const inputQuantidade = document.getElementById("quantidade");
+        const inputAvaliacao5 = document.getElementById("avaliacao5");
+        const inputAvaliacao4 = document.getElementById("avaliacao4");
+        const inputAvaliacao3 = document.getElementById("avaliacao3");
+        const inputAvaliacao2 = document.getElementById("avaliacao2");
+        const inputAvaliacao1 = document.getElementById("avaliacao1");
+        const mensagemErroQuantidade = document.getElementById("mensagemErroQuantidade");
+        const mensagemErroAvaliacao5 = document.getElementById("mensagemErroAvaliacao5");
+        const mensagemErroAvaliacao4 = document.getElementById("mensagemErroAvaliacao4");
+        const mensagemErroAvaliacao3 = document.getElementById("mensagemErroAvaliacao3");
+        const mensagemErroAvaliacao2 = document.getElementById("mensagemErroAvaliacao2");
+        const mensagemErroAvaliacao1 = document.getElementById("mensagemErroAvaliacao1");
+
+        function validarInput(inputElement, mensagemErroElement) {
+            const valor = inputElement.value.trim();
+
+            if (/[^0-9]/.test(valor)) {
+                // Se o valor não for um número inteiro, exibir uma mensagem de erro
+                mensagemErroElement.textContent = "Somente números inteiros são permitidos.";
+                inputElement.value = valor.replace(/[^0-9]/g, "");
+            } else {
+                // Limpar a mensagem de erro se o valor for um número inteiro
+                mensagemErroElement.textContent = "";
+            }
+        }
+
+        inputQuantidade.addEventListener("input", function () {
+            validarInput(inputQuantidade, mensagemErroQuantidade);
+        });
+
+        inputAvaliacao5.addEventListener("input", function () {
+            validarInput(inputAvaliacao5, mensagemErroAvaliacao5);
+        });
+
+        inputAvaliacao4.addEventListener("input", function () {
+            validarInput(inputAvaliacao4, mensagemErroAvaliacao4);
+        });
+
+        inputAvaliacao3.addEventListener("input", function () {
+            validarInput(inputAvaliacao3, mensagemErroAvaliacao3);
+        });
+
+        inputAvaliacao2.addEventListener("input", function () {
+            validarInput(inputAvaliacao2, mensagemErroAvaliacao2);
+        });
+
+        inputAvaliacao1.addEventListener("input", function () {
+            validarInput(inputAvaliacao1, mensagemErroAvaliacao1);
+        });
+
+        function calculaPercentual() {
+            var qAtendimento = Number(inputQuantidade.value);
+            var qAvaliacao5 = Number(inputAvaliacao5.value);
+            var qAvaliacao4 = Number(inputAvaliacao4.value);
+            var qAvaliacao3 = Number(inputAvaliacao3.value);
+            var qAvaliacao2 = Number(inputAvaliacao2.value);
+            var qAvaliacao1 = Number(inputAvaliacao1.value);
+
+            if (isNaN(qAtendimento) || isNaN(qAvaliacao5 || isNaN(qAvaliacao4 || isNaN(qAvaliacao3 || isNaN(qAvaliacao2 || isNaN(qAvaliacao1)))))){
+                alert("Por favor, insira valores numéricos válidos nos campos.");
+            } else if (qAtendimento === 0) {
+                alert("A quantidade de atendimento não pode ser zero.");
+            } else if((qAvaliacao5 + qAvaliacao4 +	qAvaliacao3 + qAvaliacao2 + qAvaliacao1) > qAtendimento){
+				alert("Desculpe, a quantidade de avaliação não pode ser maior que a quantidade de atendimento, zé ruela.");
+			} else if (qAvaliacao5 > qAtendimento || qAvaliacao4 > qAtendimento || qAvaliacao3 > qAtendimento || qAvaliacao2 > qAtendimento || qAvaliacao1 > qAtendimento) {
+                alert("Desculpe, Avaliação está maior que quantidade!!!");
+            } else {
+                var percentualAvaliacao = (((qAvaliacao5 * 100) + (qAvaliacao4 * 100) + (qAvaliacao3 * 100) + (qAvaliacao2 * 100) + (qAvaliacao1 * 100)) / (qAtendimento)).toFixed(2);
+                alert("Seu percentual é " + percentualAvaliacao + "%");
+            }
+
+            console.log(typeof percentualAvaliacao)
+            console.log(typeof qAtendimento)
+            console.log(typeof qAvaliacao5)
+            //USADO PARA PRINTAR NO LOG O QUE FOI DIGITADO NO INPUT
+        }
+
+        function calculaMedia(){
+            var qAtendimento = Number(inputQuantidade.value);
+            var qAvaliacao5 = Number(inputAvaliacao5.value);
+            var qAvaliacao4 = Number(inputAvaliacao4.value);
+            var qAvaliacao3 = Number(inputAvaliacao3.value);
+            var qAvaliacao2 = Number(inputAvaliacao2.value);
+            var qAvaliacao1 = Number(inputAvaliacao1.value);
+
+         if (qAvaliacao5 > qAtendimento || qAvaliacao4 > qAtendimento || qAvaliacao3 > qAtendimento || qAvaliacao2 > qAtendimento || qAvaliacao1 > qAtendimento) {
+                alert("Desculpe, Avaliação está maior que quantidade!!!");
+				}	else if (qAtendimento === 0) {
+					alert("A quantidade de atendimento não pode ser zero.");
+             } else if((qAvaliacao5 + qAvaliacao4 +	qAvaliacao3 + qAvaliacao2 + qAvaliacao1) > qAtendimento){
+				alert("Desculpe, a quantidade de avaliação não pode ser maior que a quantidade de atendimento, zé ruela.");			
+					}else { 
+						var mediaAvaliacao = (((qAvaliacao5 * 5) + (qAvaliacao4 * 4) + (qAvaliacao3 * 3) + (qAvaliacao2 * 2) + (qAvaliacao1 *1)) / (qAvaliacao5 + qAvaliacao4 +qAvaliacao3 +qAvaliacao2 +qAvaliacao1)).toFixed(2);
+						alert("Sua média de avaliação é " + mediaAvaliacao);
+						}
+			}
+
+        var button = document.querySelector("#calculaPercentualAvaliacao");
+        button.addEventListener("click", calculaPercentual);
+
+        var button = document.querySelector("#calculaMediaAvaliacao");
+        button.addEventListener("click", calculaMedia);
+
+</script>
+
+<h2 id="ass_gus"> &#128526 &#128591 Ass: Gustavo Fernandes </h2>
+
+
+
+
+
+
+
